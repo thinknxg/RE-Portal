@@ -1,0 +1,98 @@
+{% extends "templates/web.html" %}
+{% block page_content %}
+<div class="py-4">
+  <a href="/properties" class="small text-muted">&larr; All properties</a>
+  <h1 class="mt-2 mb-1">{{ doc.title }}</h1>
+  <div class="text-muted mb-3">{{ doc.locality or "" }}{{ ", " if doc.locality }}{{ doc.city or "" }}
+    · <span class="badge bg-secondary">{{ doc.listing_type }}</span></div>
+
+  {% if cover %}
+  <div class="mb-3" style="background:#eee url('{{ cover }}') center/cover; height:360px;
+       border-radius:.75rem;"></div>
+  {% endif %}
+  {% if gallery|length > 1 %}
+  <div class="d-flex gap-2 mb-4 flex-wrap">
+    {% for img in gallery %}
+    <img src="{{ img }}" style="height:72px;width:104px;object-fit:cover;border-radius:.4rem;">
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <div class="row">
+    <div class="col-md-8">
+      <h4 class="mb-3">{{ currency }} {{ money(doc.headline_price) }}
+        <span class="text-muted fs-6">{{ doc.price_period }}</span></h4>
+      <div class="d-flex gap-4 text-muted mb-4">
+        <span>{{ doc.unit_type }}</span><span>{{ doc.bedrooms or 0 }} Bedrooms</span>
+        <span>{{ doc.bathrooms or 0 }} Bathrooms</span>
+        {% if doc.area_sqm %}<span>{{ doc.area_sqm }} sqm</span>{% endif %}
+        <span>{{ doc.furnishing or "" }}</span>
+      </div>
+      <div class="mb-4">{{ doc.description or "" }}</div>
+      {% if amenities %}
+      <h6>Amenities</h6>
+      <div class="d-flex gap-2 flex-wrap mb-4">
+        {% for a in amenities %}<span class="badge bg-light text-dark border">{{ a }}</span>{% endfor %}
+      </div>
+      {% endif %}
+      {% if latitude and longitude %}
+      <div class="small text-muted">Location: {{ latitude }}, {{ longitude }}
+        · <a target="_blank" rel="noopener"
+             href="https://www.openstreetmap.org/?mlat={{ latitude }}&mlon={{ longitude }}#map=16/{{ latitude }}/{{ longitude }}">view map</a></div>
+      {% endif %}
+    </div>
+
+    <div class="col-md-4">
+      <div class="card p-3">
+        <h6 class="mb-3">Inquire about this property</h6>
+        <div id="inq-done" class="alert alert-success d-none">Thanks — we'll be in touch shortly.</div>
+        <div id="inq-form">
+          <input class="form-control form-control-sm mb-2" id="inq-name" placeholder="Full name">
+          <input class="form-control form-control-sm mb-2" id="inq-mobile" placeholder="Mobile (e.g. +968...)">
+          <input class="form-control form-control-sm mb-2" id="inq-email" placeholder="Email (optional)">
+          <textarea class="form-control form-control-sm mb-2" id="inq-msg" rows="3"
+                    placeholder="Message (optional)"></textarea>
+          <input type="text" id="inq-website-url" style="display:none" tabindex="-1" autocomplete="off">
+          <button class="btn btn-primary btn-sm w-100" id="inq-send">Send Inquiry</button>
+          <div id="inq-err" class="small text-danger mt-2"></div>
+        </div>
+        {% if contact_whatsapp %}
+        <a class="btn btn-outline-success btn-sm w-100 mt-2" target="_blank" rel="noopener"
+           href="https://wa.me/{{ contact_whatsapp | replace('+','') | replace(' ','') }}?text=Inquiry:%20{{ doc.title | urlencode }}">
+          WhatsApp Us</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+(function () {
+  var rendered = new Date().toISOString().slice(0, 19).replace("T", " ");
+  document.getElementById("inq-send").addEventListener("click", function () {
+    var btn = this; btn.disabled = true;
+    frappe.call({
+      method: "re_portal.api.listings.submit_inquiry",
+      args: {
+        full_name: document.getElementById("inq-name").value,
+        mobile: document.getElementById("inq-mobile").value,
+        email: document.getElementById("inq-email").value,
+        message: document.getElementById("inq-msg").value,
+        listing: "{{ doc.name }}",
+        website_url: document.getElementById("inq-website-url").value,
+        form_ts: rendered,
+      },
+      callback: function () {
+        document.getElementById("inq-form").classList.add("d-none");
+        document.getElementById("inq-done").classList.remove("d-none");
+      },
+      error: function (r) {
+        btn.disabled = false;
+        document.getElementById("inq-err").innerText =
+          (r && r._server_messages) ? "Please check your details and try again."
+                                    : "Something went wrong — please try again.";
+      },
+    });
+  });
+})();
+</script>
+{% endblock %}

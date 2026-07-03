@@ -1,0 +1,26 @@
+{% extends "templates/web.html" %}
+{% block page_content %}
+<div class="py-4">
+  <a href="/tenant-portal" class="small text-muted">&larr; Dashboard</a>
+  <h1 class="mt-2">Payment Schedule</h1>
+  {% if lease %}
+  <table class="table table-sm align-middle" style="max-width:760px">
+    <thead><tr><th>#</th><th>Due Date</th><th class="text-end">Amount</th>
+        <th>Status</th><th>Invoice</th></tr></thead>
+    <tbody>
+      {% for r in installments %}
+      <tr>
+        <td>{{ r.installment_no }}</td>
+        <td>{{ frappe.format_date(r.due_date) }}</td>
+        <td class="text-end">{{ money(r.amount) }}</td>
+        <td><span class="badge bg-{{ badge.get(r.status, 'secondary') }}">{{ r.status }}</span></td>
+        <td>{% if r.invoice_pdf %}<a href="{{ r.invoice_pdf }}">PDF</a>{% else %}—{% endif %}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <div class="alert alert-light border">No active lease found.</div>
+  {% endif %}
+</div>
+{% endblock %}

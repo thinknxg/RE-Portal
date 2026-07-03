@@ -1,0 +1,170 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "autoname": "",
+ "creation": "2026-01-01 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "gate_sb",
+  "brokerage_confirmed",
+  "feed_token",
+  "pf_sb",
+  "pf_enabled",
+  "col_break_1",
+  "pf_agent_id",
+  "pf_agent_name",
+  "pf_agent_email",
+  "pf_agent_phone",
+  "bayut_sb",
+  "bayut_enabled",
+  "col_break_2",
+  "bayut_agent_name",
+  "bayut_agent_email",
+  "bayut_agent_phone",
+  "notes_sb",
+  "mapping_notes"
+ ],
+ "fields": [
+  {
+   "fieldname": "gate_sb",
+   "fieldtype": "Section Break",
+   "label": "Brokerage Credential Gate"
+  },
+  {
+   "description": "Both portals only accept feeds from licensed, contracted brokerages. The feed endpoints stay disabled until this is confirmed.",
+   "fieldname": "brokerage_confirmed",
+   "fieldtype": "Check",
+   "label": "I confirm we hold a valid brokerage license and signed portal agreements (Property Finder / Bayut) covering these listings"
+  },
+  {
+   "description": "Shared secret appended to the feed URL (?token=...). Generate a long random value and register the full URL with the portal.",
+   "fieldname": "feed_token",
+   "fieldtype": "Data",
+   "label": "Feed Token",
+   "reqd": 0
+  },
+  {
+   "fieldname": "pf_sb",
+   "fieldtype": "Section Break",
+   "label": "Property Finder"
+  },
+  {
+   "fieldname": "pf_enabled",
+   "fieldtype": "Check",
+   "label": "Enable Property Finder Feed"
+  },
+  {
+   "fieldname": "col_break_1",
+   "fieldtype": "Column Break",
+   "label": "Col Break 1"
+  },
+  {
+   "fieldname": "pf_agent_id",
+   "fieldtype": "Data",
+   "label": "PF Agent ID"
+  },
+  {
+   "fieldname": "pf_agent_name",
+   "fieldtype": "Data",
+   "label": "Agent Name"
+  },
+  {
+   "fieldname": "pf_agent_email",
+   "fieldtype": "Data",
+   "label": "Agent Email",
+   "options": "Email"
+  },
+  {
+   "fieldname": "pf_agent_phone",
+   "fieldtype": "Data",
+   "label": "Agent Phone",
+   "options": "Phone"
+  },
+  {
+   "fieldname": "bayut_sb",
+   "fieldtype": "Section Break",
+   "label": "Bayut"
+  },
+  {
+   "fieldname": "bayut_enabled",
+   "fieldtype": "Check",
+   "label": "Enable Bayut Feed"
+  },
+  {
+   "fieldname": "col_break_2",
+   "fieldtype": "Column Break",
+   "label": "Col Break 2"
+  },
+  {
+   "fieldname": "bayut_agent_name",
+   "fieldtype": "Data",
+   "label": "Agent Name"
+  },
+  {
+   "fieldname": "bayut_agent_email",
+   "fieldtype": "Data",
+   "label": "Agent Email",
+   "options": "Email"
+  },
+  {
+   "fieldname": "bayut_agent_phone",
+   "fieldtype": "Data",
+   "label": "Agent Phone",
+   "options": "Phone"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "notes_sb",
+   "fieldtype": "Section Break",
+   "label": "Notes Sb"
+  },
+  {
+   "description": "Field mappings follow each portal's published bulk-upload schema; verify against the portal's current spec during onboarding \u2014 schemas change without notice.",
+   "fieldname": "mapping_notes",
+   "fieldtype": "Small Text",
+   "label": "Mapping Notes"
+  }
+ ],
+ "has_web_view": 0,
+ "index_web_pages_for_search": 0,
+ "is_submittable": 0,
+ "issingle": 1,
+ "istable": 0,
+ "links": [],
+ "modified": "2026-01-01 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "RE Portal",
+ "name": "Listing Feed Settings",
+ "naming_rule": "",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "RE Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

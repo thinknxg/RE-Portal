@@ -1,0 +1,66 @@
+{% extends "templates/web.html" %}
+{% block page_content %}
+<div class="py-4">
+  <a href="/tenant-portal" class="small text-muted">&larr; Dashboard</a>
+  <h1 class="mt-2">Maintenance</h1>
+
+  <div class="card p-3 mb-4" style="max-width:520px">
+    <h6 class="mb-3">Raise a Request</h6>
+    <div id="mr-done" class="alert alert-success d-none">Request submitted — reference <span id="mr-ref"></span>.</div>
+    <div id="mr-form">
+      <select id="mr-cat" class="form-select form-select-sm mb-2">
+        {% for c in categories %}<option>{{ c }}</option>{% endfor %}
+      </select>
+      <select id="mr-pri" class="form-select form-select-sm mb-2">
+        {% for p in ["Low", "Medium", "High", "Emergency"] %}
+        <option {{ "selected" if p == "Medium" }}>{{ p }}</option>{% endfor %}
+      </select>
+      <textarea id="mr-desc" class="form-control form-control-sm mb-2" rows="3"
+                placeholder="Describe the issue"></textarea>
+      <button class="btn btn-primary btn-sm" id="mr-send">Submit</button>
+      <div id="mr-err" class="small text-danger mt-2"></div>
+    </div>
+  </div>
+
+  <h6>My Requests</h6>
+  {% if requests %}
+  <table class="table table-sm align-middle" style="max-width:760px">
+    <thead><tr><th>Ref</th><th>Category</th><th>Priority</th><th>Status</th><th>Raised</th></tr></thead>
+    <tbody>
+      {% for r in requests %}
+      <tr>
+        <td>{{ r.name }}</td><td>{{ r.category }}</td><td>{{ r.priority }}</td>
+        <td><span class="badge bg-{{ badge.get(r.status, 'secondary') }}">{{ r.status }}</span></td>
+        <td class="small text-muted">{{ frappe.format_date(r.creation) }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}<div class="text-muted small">No requests yet.</div>{% endif %}
+</div>
+<script>
+(function () {
+  document.getElementById("mr-send").addEventListener("click", function () {
+    var btn = this; btn.disabled = true;
+    frappe.call({
+      method: "re_portal.api.tenant.create_maintenance",
+      args: {
+        category: document.getElementById("mr-cat").value,
+        priority: document.getElementById("mr-pri").value,
+        description: document.getElementById("mr-desc").value,
+      },
+      callback: function (r) {
+        document.getElementById("mr-form").classList.add("d-none");
+        document.getElementById("mr-ref").innerText = r.message.name;
+        document.getElementById("mr-done").classList.remove("d-none");
+        setTimeout(function () { window.location.reload(); }, 1500);
+      },
+      error: function () {
+        btn.disabled = false;
+        document.getElementById("mr-err").innerText = "Could not submit — please try again.";
+      },
+    });
+  });
+})();
+</script>
+{% endblock %}

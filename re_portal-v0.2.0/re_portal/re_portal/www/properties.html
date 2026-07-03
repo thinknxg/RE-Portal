@@ -1,0 +1,62 @@
+{% extends "templates/web.html" %}
+{% block page_content %}
+<div class="py-4">
+  <h1 class="mb-1">{{ portal_title }}</h1>
+  <p class="text-muted">{{ portal_tagline }}</p>
+
+  <form method="get" class="row g-2 align-items-end mb-4">
+    <div class="col-6 col-md-2">
+      <label class="form-label small">Type</label>
+      <select name="listing_type" class="form-select form-select-sm">
+        <option value="">Any</option>
+        {% for t in ["Rent", "Sale"] %}
+        <option value="{{ t }}" {{ "selected" if args.get("listing_type") == t }}>{{ t }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-6 col-md-2">
+      <label class="form-label small">City</label>
+      <select name="city" class="form-select form-select-sm">
+        <option value="">Any</option>
+        {% for c in cities %}{% if c %}
+        <option value="{{ c }}" {{ "selected" if args.get("city") == c }}>{{ c }}</option>
+        {% endif %}{% endfor %}
+      </select>
+    </div>
+    <div class="col-6 col-md-2">
+      <label class="form-label small">Min Beds</label>
+      <select name="bedrooms" class="form-select form-select-sm">
+        <option value="">Any</option>
+        {% for b in ["1","2","3","4"] %}
+        <option value="{{ b }}" {{ "selected" if args.get("bedrooms") == b }}>{{ b }}+</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-6 col-md-2">
+      <label class="form-label small">Max Price ({{ currency }})</label>
+      <input type="number" name="max_price" class="form-control form-control-sm"
+             value="{{ args.get('max_price') or '' }}">
+    </div>
+    <div class="col-12 col-md-2">
+      <button class="btn btn-primary btn-sm w-100">Search</button>
+    </div>
+  </form>
+
+  {% if results %}
+  <div class="row">
+    {% for row in results %}{% include "templates/includes/listing_card.html" %}{% endfor %}
+  </div>
+  {% if total_pages > 1 %}
+  <nav><ul class="pagination">
+    {% for p in range(1, total_pages + 1) %}
+    <li class="page-item {{ 'active' if p == page }}">
+      <a class="page-link" href="?page={{ p }}{% for k in ['listing_type','city','bedrooms','max_price'] %}{% if args.get(k) %}&{{ k }}={{ args.get(k) }}{% endif %}{% endfor %}">{{ p }}</a>
+    </li>
+    {% endfor %}
+  </ul></nav>
+  {% endif %}
+  {% else %}
+  <div class="alert alert-light border">No properties match those filters yet.</div>
+  {% endif %}
+</div>
+{% endblock %}

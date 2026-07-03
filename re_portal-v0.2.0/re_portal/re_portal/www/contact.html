@@ -1,0 +1,48 @@
+{% extends "templates/web.html" %}
+{% block page_content %}
+<div class="py-5" style="max-width:520px">
+  <h1>Contact Us</h1>
+  <p class="text-muted">Tell us what you're looking for and our team will reach out.</p>
+  <div id="c-done" class="alert alert-success d-none">Thanks — we'll be in touch shortly.</div>
+  <div id="c-form">
+    <input class="form-control mb-2" id="c-name" placeholder="Full name">
+    <input class="form-control mb-2" id="c-mobile" placeholder="Mobile (e.g. +968...)">
+    <input class="form-control mb-2" id="c-email" placeholder="Email (optional)">
+    <textarea class="form-control mb-2" id="c-msg" rows="4" placeholder="Message"></textarea>
+    <input type="text" id="c-website-url" style="display:none" tabindex="-1" autocomplete="off">
+    <button class="btn btn-primary" id="c-send">Send</button>
+    <div id="c-err" class="small text-danger mt-2"></div>
+  </div>
+  <div class="mt-4 small text-muted">
+    {% if contact_email %}Email: {{ contact_email }}<br>{% endif %}
+    {% if contact_whatsapp %}WhatsApp: {{ contact_whatsapp }}{% endif %}
+  </div>
+</div>
+<script>
+(function () {
+  var rendered = new Date().toISOString().slice(0, 19).replace("T", " ");
+  document.getElementById("c-send").addEventListener("click", function () {
+    var btn = this; btn.disabled = true;
+    frappe.call({
+      method: "re_portal.api.listings.submit_inquiry",
+      args: {
+        full_name: document.getElementById("c-name").value,
+        mobile: document.getElementById("c-mobile").value,
+        email: document.getElementById("c-email").value,
+        message: document.getElementById("c-msg").value,
+        website_url: document.getElementById("c-website-url").value,
+        form_ts: rendered,
+      },
+      callback: function () {
+        document.getElementById("c-form").classList.add("d-none");
+        document.getElementById("c-done").classList.remove("d-none");
+      },
+      error: function () {
+        btn.disabled = false;
+        document.getElementById("c-err").innerText = "Please check your details and try again.";
+      },
+    });
+  });
+})();
+</script>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends "templates/web.html" %}
+{% block page_content %}
+<div class="py-4">
+  <h1 class="mb-1">Welcome, {{ tenant_name }}</h1>
+  <p class="text-muted mb-4">Your tenancy at a glance.</p>
+
+  {% if lease %}
+  <div class="row g-3 mb-4">
+    <div class="col-md-4">
+      <div class="card p-3 h-100">
+        <div class="text-muted small">Current Home</div>
+        <div class="fw-bold">{{ unit_title or lease.unit }}</div>
+        <div class="small text-muted mt-1">Lease {{ lease.name }} · {{ lease.status }}</div>
+        <div class="small">{{ frappe.format_date(lease.start_date) }} &rarr; {{ frappe.format_date(lease.end_date) }}</div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card p-3 h-100">
+        <div class="text-muted small">Next Payment</div>
+        {% if next_installment %}
+        <div class="fw-bold">{{ money(next_installment.amount) }}</div>
+        <div class="small">Due {{ frappe.format_date(next_installment.due_date) }}
+          · <span class="badge bg-{{ 'danger' if next_installment.status == 'Overdue' else 'secondary' }}">{{ next_installment.status }}</span></div>
+        {% else %}<div class="fw-bold text-success">All settled</div>{% endif %}
+        {% if overdue_count %}
+        <div class="small text-danger mt-1">{{ overdue_count }} overdue installment(s)</div>
+        {% endif %}
+        <a class="small mt-2" href="/tenant-portal/payments">View schedule &rarr;</a>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card p-3 h-100">
+        <div class="text-muted small">Maintenance</div>
+        <div class="fw-bold">{{ open_requests }} open request(s)</div>
+        <a class="small mt-2" href="/tenant-portal/maintenance">Raise / track requests &rarr;</a>
+      </div>
+    </div>
+  </div>
+  <a class="btn btn-outline-primary btn-sm" href="/tenant-portal/lease">Lease details</a>
+  {% else %}
+  <div class="alert alert-light border">No active lease is linked to your profile.
+    Please contact the leasing office.</div>
+  {% endif %}
+</div>
+{% endblock %}

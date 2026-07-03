@@ -1,0 +1,19 @@
+<div class="col-md-4 mb-4">
+  <a class="card h-100 text-decoration-none listing-card" href="/{{ row.route }}">
+    <div class="listing-cover" style="background:#eee url('{{ row.cover or '' }}') center/cover;
+         height:180px; border-radius:.5rem .5rem 0 0;"></div>
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-start">
+        <h6 class="card-title mb-1">{{ row.title }}</h6>
+        {% if row.featured %}<span class="badge bg-warning text-dark">Featured</span>{% endif %}
+      </div>
+      <div class="text-muted small mb-2">{{ row.locality or "" }}{{ ", " if row.locality }}{{ row.city or "" }}</div>
+      <div class="fw-bold">{{ currency }} {{ money(row.headline_price) }}
+        <span class="text-muted fw-normal small">{{ row.price_period or "Per Year" }}</span></div>
+      <div class="text-muted small mt-1">
+        {{ row.unit_type or "" }} · {{ row.bedrooms or 0 }} BR · {{ row.bathrooms or 0 }} Bath
+        {% if row.area_sqm %} · {{ row.area_sqm }} sqm{% endif %}
+      </div>
+    </div>
+  </a>
+</div>

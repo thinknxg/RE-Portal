@@ -1,0 +1,38 @@
+{% extends "templates/web.html" %}
+{% block page_content %}
+<div class="py-4">
+  <a href="/tenant-portal" class="small text-muted">&larr; Dashboard</a>
+  <h1 class="mt-2">My Lease</h1>
+  {% if lease %}
+  <div class="card p-3 mb-3" style="max-width:680px">
+    <div class="row small">
+      <div class="col-6 mb-2"><span class="text-muted">Contract</span><br>{{ lease.name }}</div>
+      <div class="col-6 mb-2"><span class="text-muted">Unit</span><br>{{ unit_title or lease.unit }}</div>
+      <div class="col-6 mb-2"><span class="text-muted">Term</span><br>
+        {{ frappe.format_date(lease.start_date) }} &rarr; {{ frappe.format_date(lease.end_date) }}</div>
+      <div class="col-6 mb-2"><span class="text-muted">Payment Frequency</span><br>{{ lease.payment_frequency }}</div>
+      <div class="col-6"><span class="text-muted">Total Contract Value</span><br>
+        <strong>{{ money(lease.total_contract_value) }}</strong></div>
+      <div class="col-6"><span class="text-muted">Status</span><br>
+        <span class="badge bg-secondary">{{ lease.status }}</span></div>
+    </div>
+  </div>
+  <h6>Charges</h6>
+  <table class="table table-sm" style="max-width:680px">
+    <thead><tr><th>Type</th><th>Description</th><th class="text-end">Amount</th></tr></thead>
+    <tbody>
+      {% for c in charges %}
+      <tr><td>{{ c.charge_type }}</td><td>{{ c.description or "" }}</td>
+          <td class="text-end">{{ money(c.amount) }}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% if deposit %}
+  <p class="small text-muted">Security deposit: {{ money(deposit.amount) }} ({{ deposit.status }})</p>
+  {% endif %}
+  <a class="btn btn-outline-primary btn-sm" href="{{ contract_pdf }}">Download Contract PDF</a>
+  {% else %}
+  <div class="alert alert-light border">No active lease found.</div>
+  {% endif %}
+</div>
+{% endblock %}

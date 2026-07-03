@@ -1,0 +1,129 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "autoname": "",
+ "creation": "2026-01-01 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "brand_sb",
+  "portal_title",
+  "portal_tagline",
+  "col_break_1",
+  "contact_whatsapp",
+  "contact_email",
+  "display_sb",
+  "currency_label",
+  "page_size",
+  "col_break_2",
+  "inquiry_hourly_limit"
+ ],
+ "fields": [
+  {
+   "fieldname": "brand_sb",
+   "fieldtype": "Section Break",
+   "label": "Branding"
+  },
+  {
+   "default": "Find Your Next Home",
+   "fieldname": "portal_title",
+   "fieldtype": "Data",
+   "label": "Portal Title"
+  },
+  {
+   "default": "Apartments, villas and offices across Oman",
+   "fieldname": "portal_tagline",
+   "fieldtype": "Data",
+   "label": "Portal Tagline"
+  },
+  {
+   "fieldname": "col_break_1",
+   "fieldtype": "Column Break",
+   "label": "Col Break 1"
+  },
+  {
+   "description": "Shown on listing pages as the WhatsApp CTA",
+   "fieldname": "contact_whatsapp",
+   "fieldtype": "Data",
+   "label": "Contact Whatsapp",
+   "options": "Phone"
+  },
+  {
+   "fieldname": "contact_email",
+   "fieldtype": "Data",
+   "label": "Contact Email",
+   "options": "Email"
+  },
+  {
+   "fieldname": "display_sb",
+   "fieldtype": "Section Break",
+   "label": "Display"
+  },
+  {
+   "default": "OMR",
+   "fieldname": "currency_label",
+   "fieldtype": "Data",
+   "label": "Currency Label"
+  },
+  {
+   "default": 9,
+   "description": "Listings per page on /properties",
+   "fieldname": "page_size",
+   "fieldtype": "Int",
+   "label": "Page Size"
+  },
+  {
+   "fieldname": "col_break_2",
+   "fieldtype": "Column Break",
+   "label": "Col Break 2"
+  },
+  {
+   "default": 20,
+   "description": "Max guest inquiries per IP per hour",
+   "fieldname": "inquiry_hourly_limit",
+   "fieldtype": "Int",
+   "label": "Inquiry Hourly Limit"
+  }
+ ],
+ "has_web_view": 0,
+ "index_web_pages_for_search": 0,
+ "is_submittable": 0,
+ "issingle": 1,
+ "istable": 0,
+ "links": [],
+ "modified": "2026-01-01 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "RE Portal",
+ "name": "Portal Settings",
+ "naming_rule": "",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "RE Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
