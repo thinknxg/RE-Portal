@@ -16,7 +16,7 @@ PUBLIC_FIELDS = [
 @rate_limit(limit=120, seconds=3600)
 def search(listing_type=None, unit_type=None, city=None, bedrooms=None,
            min_price=None, max_price=None, furnishing=None, page=1, page_size=None):
-    settings = frappe.get_cached_doc("Portal Settings")
+    settings = frappe.get_cached_doc("RE Portal Settings")
     page_size = min(cint(page_size) or cint(settings.page_size) or 9, 30)
     page = max(cint(page), 1)
 

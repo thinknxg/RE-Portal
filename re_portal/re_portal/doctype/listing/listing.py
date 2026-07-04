@@ -31,7 +31,7 @@ class Listing(WebsiteGenerator):
     def get_context(self, context):
         context.no_cache = 1
         context.parents = [{"route": "properties", "label": _("Properties")}]
-        settings = frappe.get_cached_doc("Portal Settings")
+        settings = frappe.get_cached_doc("RE Portal Settings")
         context.currency = settings.currency_label or "OMR"
         context.contact_whatsapp = settings.contact_whatsapp
         context.cover = (self.photos[0].image if self.photos else None)

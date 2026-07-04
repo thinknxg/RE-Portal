@@ -7,4 +7,4 @@ def money(amount, currency=None):
     if amount is None:
         return ""
     return fmt_money(amount, currency=currency or
-                     frappe.db.get_single_value("Portal Settings", "currency_label") or "OMR")
+                     frappe.db.get_single_value("RE Portal Settings", "currency_label") or "OMR")

@@ -21,7 +21,7 @@ def get_context(context):
     context.total_pages = -(-result["total"] // result["page_size"])
     context.cities = frappe.get_all("Listing", filters={"is_published": 1},
                                     distinct=True, pluck="city")
-    settings = frappe.get_cached_doc("Portal Settings")
+    settings = frappe.get_cached_doc("RE Portal Settings")
     context.portal_title = settings.portal_title
     context.portal_tagline = settings.portal_tagline
     context.title = "Properties"
