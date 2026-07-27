@@ -158,7 +158,6 @@
    "read_only": 1
   },
   {
-   "fetch_from": "unit.property.city",
    "fieldname": "city",
    "fieldtype": "Data",
    "in_standard_filter": 1,
@@ -166,7 +165,6 @@
    "read_only": 1
   },
   {
-   "fetch_from": "unit.property.area",
    "fieldname": "locality",
    "fieldtype": "Data",
    "label": "Area",

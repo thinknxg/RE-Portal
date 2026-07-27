@@ -11,6 +11,12 @@ doc_events = {
     "Lease Contract": {
         "on_submit": "re_portal.re_portal.doctype.listing.listing.unpublish_unit_listings",
     },
+    "Property": {
+        "on_update": "re_portal.sync.sync_property_on_update",
+    },
+    "Unit": {
+        "on_update": "re_portal.sync.sync_unit_on_update",
+    },
 }
 
 jinja = {

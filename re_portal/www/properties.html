@@ -24,6 +24,15 @@
       </select>
     </div>
     <div class="col-6 col-md-2">
+      <label class="form-label small">Unit Type</label>
+      <select name="unit_type" class="form-select form-select-sm">
+        <option value="">Any</option>
+        {% for ut in ["2BR", "3BR", "4BR"] %}
+        <option value="{{ ut }}" {{ "selected" if args.get("unit_type") == ut }}>{{ ut }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-6 col-md-2">
       <label class="form-label small">Min Beds</label>
       <select name="bedrooms" class="form-select form-select-sm">
         <option value="">Any</option>
@@ -33,7 +42,12 @@
       </select>
     </div>
     <div class="col-6 col-md-2">
-      <label class="form-label small">Max Price ({{ currency }})</label>
+      <label class="form-label small">Min Annual Rent ({{ currency }})</label>
+      <input type="number" name="min_price" class="form-control form-control-sm"
+             value="{{ args.get('min_price') or '' }}">
+    </div>
+    <div class="col-6 col-md-2">
+      <label class="form-label small">Max Annual Rent ({{ currency }})</label>
       <input type="number" name="max_price" class="form-control form-control-sm"
              value="{{ args.get('max_price') or '' }}">
     </div>
@@ -50,7 +64,7 @@
   <nav><ul class="pagination">
     {% for p in range(1, total_pages + 1) %}
     <li class="page-item {{ 'active' if p == page }}">
-      <a class="page-link" href="?page={{ p }}{% for k in ['listing_type','city','bedrooms','max_price'] %}{% if args.get(k) %}&{{ k }}={{ args.get(k) }}{% endif %}{% endfor %}">{{ p }}</a>
+      <a class="page-link" href="?page={{ p }}{% for k in ['listing_type','city','unit_type','bedrooms','min_price','max_price'] %}{% if args.get(k) %}&{{ k }}={{ args.get(k) }}{% endif %}{% endfor %}">{{ p }}</a>
     </li>
     {% endfor %}
   </ul></nav>
