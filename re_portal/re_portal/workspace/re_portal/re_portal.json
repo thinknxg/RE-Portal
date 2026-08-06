@@ -1,7 +1,7 @@
 {
  "app": "re_portal",
  "charts": [],
- "content": "[]",
+ "content": "[{\"id\": \"blk19\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h4\\\"><b>RE Portal</b></span>\", \"col\": 12}}, {\"id\": \"blk20\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Public Listings Site\", \"col\": 3}}, {\"id\": \"blk21\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Listings\", \"col\": 3}}, {\"id\": \"blk22\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Inquiries\", \"col\": 3}}, {\"id\": \"blk23\", \"type\": \"card\", \"data\": {\"card_name\": \"Listings\", \"col\": 4}}, {\"id\": \"blk24\", \"type\": \"card\", \"data\": {\"card_name\": \"Inquiries\", \"col\": 4}}, {\"id\": \"blk25\", \"type\": \"card\", \"data\": {\"card_name\": \"Settings\", \"col\": 4}}]",
  "creation": "2026-08-06 10:20:52.653350",
  "custom_blocks": [],
  "docstatus": 0,
@@ -82,7 +82,7 @@
    "type": "Link"
   }
  ],
- "modified": "2026-08-06 10:33:27.869184",
+ "modified": "2026-08-06 11:15:01.531502",
  "modified_by": "Administrator",
  "module": "RE Portal",
  "name": "RE Portal",
