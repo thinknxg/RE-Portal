@@ -1,0 +1,117 @@
+{
+ "app": "re_portal",
+ "charts": [],
+ "content": "[]",
+ "creation": "2026-08-06 10:20:52.653350",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "hide_custom": 0,
+ "icon": "globe",
+ "idx": 0,
+ "indicator_color": "green",
+ "is_hidden": 0,
+ "label": "RE Portal",
+ "link_type": "DocType",
+ "links": [
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Listings",
+   "link_count": 0,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Listing",
+   "link_count": 0,
+   "link_to": "Listing",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Listing Feed Settings",
+   "link_count": 0,
+   "link_to": "Listing Feed Settings",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Inquiries",
+   "link_count": 0,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Listing Inquiry",
+   "link_count": 0,
+   "link_to": "Listing Inquiry",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Settings",
+   "link_count": 0,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "RE Portal Settings",
+   "link_count": 0,
+   "link_to": "RE Portal Settings",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  }
+ ],
+ "modified": "2026-08-06 10:33:27.869184",
+ "modified_by": "Administrator",
+ "module": "RE Portal",
+ "name": "RE Portal",
+ "number_cards": [],
+ "owner": "Administrator",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [],
+ "sequence_id": 0.0,
+ "shortcuts": [
+  {
+   "doc_view": "",
+   "label": "Public Listings Site",
+   "type": "URL",
+   "url": "/properties"
+  },
+  {
+   "doc_view": "",
+   "label": "Listings",
+   "link_to": "Listing",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "label": "Inquiries",
+   "link_to": "Listing Inquiry",
+   "type": "DocType"
+  }
+ ],
+ "title": "RE Portal",
+ "type": "Workspace"
+}
