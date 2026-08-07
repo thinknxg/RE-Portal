@@ -19,6 +19,12 @@ doc_events = {
     },
 }
 
+scheduler_events = {
+    "daily": [
+        "re_portal.sync.backfill_all",
+    ],
+}
+
 jinja = {
     "methods": ["re_portal.utils.money"],
 }

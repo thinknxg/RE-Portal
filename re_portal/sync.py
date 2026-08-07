@@ -113,3 +113,29 @@ def _sync_unit(unit_name, unit_status, property_is_live):
         listing.append("photos", {"image": p.image, "caption": p.caption})
 
     listing.insert(ignore_permissions=True)
+
+
+def backfill_all():
+    """Safety-net backfill: re-run Property -> Listing sync for every Property.
+
+    Catches any Units/Properties whose eligibility changed without going
+    through the normal on_update hooks (bulk SQL updates, data imports,
+    console scripts, etc. all bypass on_update). Runs nightly via the
+    scheduler; also exposed via run_backfill() for on-demand manual use.
+    """
+    properties = frappe.get_all("Property", fields=["name", "is_live"])
+    for p in properties:
+        _sync_property(p.name, p.is_live)
+    frappe.db.commit()
+    frappe.logger("re_portal").info(
+        f"Listing backfill complete: checked {len(properties)} properties."
+    )
+    return {"ok": True, "properties_checked": len(properties)}
+
+
+@frappe.whitelist()
+def run_backfill():
+    """Manually triggerable version of backfill_all(), restricted to System Managers."""
+    if "System Manager" not in frappe.get_roles():
+        frappe.throw(_("Not permitted"), frappe.PermissionError)
+    return backfill_all()
