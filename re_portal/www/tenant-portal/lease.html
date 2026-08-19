@@ -31,8 +31,125 @@
   <p class="small text-muted">Security deposit: {{ money(deposit.amount) }} ({{ deposit.status }})</p>
   {% endif %}
   <a class="btn btn-outline-primary btn-sm" href="{{ contract_pdf }}">Download Contract PDF</a>
+  {% if lease.status in ("Active", "Expiring") %}
+  <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#terminateModal">
+    Terminate Lease
+  </button>
+  {% endif %}
   {% else %}
   <div class="alert alert-light border">No active lease found.</div>
   {% endif %}
 </div>
+
+{% if lease and lease.status in ("Active", "Expiring") %}
+<div class="modal fade" id="terminateModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Terminate Lease</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div id="terminateError" class="alert alert-danger d-none small"></div>
+        <div class="mb-2">
+          <label class="form-label small">Schedule End Date</label>
+          <input type="date" id="tt_termination_date" class="form-control form-control-sm" required>
+        </div>
+        <div class="mb-2">
+          <label class="form-label small">Reasons</label>
+          <select id="tt_reasons" class="form-select form-select-sm">
+            <option>New Contract</option>
+            <option>Lost to another agent</option>
+            <option>Tenancy Surrendered</option>
+            <option>End of Tenancy</option>
+            <option>Tenancy Breach</option>
+            <option>Break Clause Activation</option>
+          </select>
+        </div>
+        <div class="mb-2">
+          <label class="form-label small">Security Deposit</label>
+          <input type="text" class="form-control form-control-sm" value="{{ money(security_deposit_amount) }}" disabled>
+        </div>
+        <div class="form-check mb-2">
+          <input type="checkbox" id="tt_apply_charge" class="form-check-input">
+          <label class="form-check-label small" for="tt_apply_charge">Apply Charge to Tenant</label>
+        </div>
+        <div class="mb-2">
+          <label class="form-label small">Outstanding Rent</label>
+          <div class="input-group input-group-sm">
+            <input type="number" step="0.001" id="tt_outstanding_rent" class="form-control">
+            <button type="button" id="tt_calculate" class="btn btn-outline-secondary">Calculate Amount</button>
+          </div>
+        </div>
+        <div class="mb-2">
+          <label class="form-label small">Mode of Payment</label>
+          <input type="text" id="tt_mode_of_payment" class="form-control form-control-sm" placeholder="e.g. Cash, Bank Transfer">
+        </div>
+        <div class="mb-2">
+          <label class="form-label small">Notes</label>
+          <textarea id="tt_reason" class="form-control form-control-sm" rows="2"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" id="tt_submit" class="btn btn-danger btn-sm">Terminate</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const $ = (id) => document.getElementById(id);
+  const err = $("terminateError");
+
+  function showError(msg) {
+    err.textContent = msg;
+    err.classList.remove("d-none");
+  }
+
+  $("tt_calculate").addEventListener("click", function () {
+    const upto = $("tt_termination_date").value;
+    frappe.call({
+      method: "re_portal.api.tenant.get_outstanding_rent",
+      args: { upto_date: upto },
+      callback: function (r) {
+        $("tt_outstanding_rent").value = r.message || 0;
+      },
+    });
+  });
+
+  $("tt_submit").addEventListener("click", function () {
+    err.classList.add("d-none");
+    const termination_date = $("tt_termination_date").value;
+    if (!termination_date) {
+      showError("Schedule End Date is required.");
+      return;
+    }
+    $("tt_submit").disabled = true;
+    frappe.call({
+      method: "re_portal.api.tenant.terminate_lease",
+      type: "POST",
+      args: {
+        termination_date: termination_date,
+        reasons: $("tt_reasons").value,
+        outstanding_rent: $("tt_outstanding_rent").value || 0,
+        mode_of_payment: $("tt_mode_of_payment").value,
+        apply_charge_to_tenant: $("tt_apply_charge").checked ? 1 : 0,
+        reason: $("tt_reason").value,
+      },
+      callback: function (r) {
+        if (r.message && r.message.ok) {
+          window.location.reload();
+        }
+      },
+      error: function (r) {
+        $("tt_submit").disabled = false;
+        showError((r && r.message) || "Something went wrong. Please try again.");
+      },
+    });
+  });
+});
+</script>
+{% endif %}
 {% endblock %}

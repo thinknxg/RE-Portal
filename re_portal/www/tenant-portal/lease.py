@@ -18,6 +18,7 @@ def get_context(context):
             "Security Deposit", lease.security_deposit,
             ["amount", "status"], as_dict=True)
         context.deposit = deposit
+        context.security_deposit_amount = lease.security_deposit and deposit and deposit.amount or 0
         context.contract_pdf = (
             "/api/method/frappe.utils.print_format.download_pdf"
             f"?doctype=Lease%20Contract&name={lease.name}")

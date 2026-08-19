@@ -78,6 +78,38 @@ def maintenance_list():
         order_by="creation desc", page_length=50)
 
 
+@frappe.whitelist()
+def get_outstanding_rent(upto_date=None):
+    tenant = _require_tenant()
+    lease = _active_lease(tenant)
+    if not lease:
+        frappe.throw(_("No active lease found."))
+    doc = frappe.get_doc("Lease Contract", lease.name)
+    return doc.get_outstanding_rent(upto_date=upto_date)
+
+
+@frappe.whitelist(methods=["POST"])
+def terminate_lease(termination_date, reasons, outstanding_rent=None,
+                     mode_of_payment=None, apply_charge_to_tenant=None, reason=None):
+    """Tenant self-service termination. Lease is always resolved from the
+    session tenant - a lease name is never accepted from the client, so a
+    tenant can only ever terminate their own active lease."""
+    tenant = _require_tenant()
+    lease = _active_lease(tenant)
+    if not lease:
+        frappe.throw(_("No active lease found."))
+    doc = frappe.get_doc("Lease Contract", lease.name)
+    status = doc.terminate(
+        termination_date=termination_date,
+        reasons=reasons,
+        outstanding_rent=outstanding_rent,
+        mode_of_payment=mode_of_payment,
+        apply_charge_to_tenant=apply_charge_to_tenant,
+        reason=reason,
+    )
+    return {"ok": True, "status": status, "unit": doc.unit, "reasons": reasons}
+
+
 @frappe.whitelist(methods=["POST"])
 def create_maintenance(category, description, priority="Medium"):
     tenant = _require_tenant()
