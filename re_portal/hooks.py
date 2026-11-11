@@ -25,6 +25,9 @@ scheduler_events = {
     ],
 }
 
+web_include_js = ["/assets/re_portal/js/chat_widget.js"]
+web_include_css = ["/assets/re_portal/css/chat_widget.css"]
+
 jinja = {
     "methods": ["re_portal.utils.money"],
 }

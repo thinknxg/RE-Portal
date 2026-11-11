@@ -1,0 +1,19 @@
+.rpc-btn{position:fixed;bottom:20px;inset-inline-end:20px;z-index:1050;width:56px;height:56px;border:0;border-radius:50%;background:var(--primary,#2563eb);color:#fff;font-size:24px;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer}
+.rpc-panel{position:fixed;bottom:88px;inset-inline-end:20px;z-index:1050;width:min(92vw,380px);height:min(75vh,540px);display:none;flex-direction:column;background:#fff;color:#1f2937;border:1px solid #e5e7eb;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.2);overflow:hidden;font-size:14px}
+.rpc-panel.rpc-open{display:flex}
+.rpc-head{display:flex;align-items:center;gap:8px;padding:10px 12px;background:var(--primary,#2563eb);color:#fff}
+.rpc-head .rpc-ttl{flex:1;line-height:1.2}.rpc-head small{display:block;opacity:.85;font-size:11px}
+.rpc-head button,.rpc-head a{background:rgba(255,255,255,.18);color:#fff;border:0;border-radius:6px;padding:3px 8px;font-size:12px;text-decoration:none;cursor:pointer}
+.rpc-log{flex:1;overflow-y:auto;padding:12px;background:#f9fafb}
+.rpc-msg{max-width:85%;margin:0 0 8px;padding:8px 11px;border-radius:12px;line-height:1.45;word-wrap:break-word;white-space:normal}
+.rpc-bot{background:#fff;border:1px solid #e5e7eb;margin-inline-end:auto}
+.rpc-usr{background:var(--primary,#2563eb);color:#fff;margin-inline-start:auto}
+.rpc-msg a{text-decoration:underline;color:inherit;font-weight:600}
+.rpc-chips{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 8px}
+.rpc-chips button{border:1px solid var(--primary,#2563eb);background:#fff;color:var(--primary,#2563eb);border-radius:14px;padding:4px 10px;font-size:12px;cursor:pointer}
+.rpc-form{display:flex;gap:6px;padding:8px;border-top:1px solid #e5e7eb;background:#fff}
+.rpc-form input{flex:1;min-width:0;border:1px solid #d1d5db;border-radius:8px;padding:7px 10px;font-size:14px}
+.rpc-form button{border:0;border-radius:8px;padding:0 14px;background:var(--primary,#2563eb);color:#fff;cursor:pointer}
+.rpc-form button:disabled{opacity:.5;cursor:default}
+@media (max-width:480px){.rpc-panel{inset-inline:8px;width:auto;bottom:80px}}
+.rpc-note{padding:4px 12px;font-size:11px;line-height:1.35;color:#6b7280;background:#fff}

@@ -1,0 +1,145 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "autoname": "",
+ "creation": "2026-01-01 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "gate_sb",
+  "enabled",
+  "provider",
+  "api_key",
+  "cb1",
+  "model",
+  "max_messages_per_session",
+  "cost_sb",
+  "monthly_budget",
+  "cb2",
+  "input_cost_per_mtok",
+  "output_cost_per_mtok",
+  "prompt_sb",
+  "extra_instructions"
+ ],
+ "fields": [
+  {
+   "fieldname": "gate_sb",
+   "fieldtype": "Section Break",
+   "label": "Chatbot"
+  },
+  {
+   "default": "0",
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "label": "Enabled"
+  },
+  {
+   "default": "Gemini",
+   "fieldname": "provider",
+   "fieldtype": "Select",
+   "label": "Provider",
+   "options": "Gemini\nAnthropic",
+   "description": "Gemini has a free tier (key from aistudio.google.com/apikey). Anthropic is paid (key from the Claude Console)."
+  },
+  {
+   "fieldname": "api_key",
+   "fieldtype": "Password",
+   "label": "API Key"
+  },
+  {
+   "fieldname": "cb1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "model",
+   "fieldtype": "Data",
+   "label": "Model",
+   "description": "Leave empty for the provider default (Gemini: gemini-3.8-flash, Anthropic: claude-haiku-5-5)."
+  },
+  {
+   "default": "20",
+   "fieldname": "max_messages_per_session",
+   "fieldtype": "Int",
+   "label": "Max Visitor Messages per Chat"
+  },
+  {
+   "fieldname": "cost_sb",
+   "fieldtype": "Section Break",
+   "label": "Cost Control"
+  },
+  {
+   "description": "0 = no monthly cap. Compared against the cost logged on Portal Chat Sessions this month.",
+   "fieldname": "monthly_budget",
+   "fieldtype": "Float",
+   "label": "Monthly Budget (USD)"
+  },
+  {
+   "fieldname": "cb2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "USD per million input tokens, from your provider's price list. Leave 0 on a free tier.",
+   "fieldname": "input_cost_per_mtok",
+   "fieldtype": "Float",
+   "label": "Input Cost per 1M Tokens"
+  },
+  {
+   "fieldname": "output_cost_per_mtok",
+   "fieldtype": "Float",
+   "label": "Output Cost per 1M Tokens",
+   "description": "USD per million output tokens."
+  },
+  {
+   "fieldname": "prompt_sb",
+   "fieldtype": "Section Break",
+   "label": "Assistant Instructions"
+  },
+  {
+   "description": "Appended to the built-in system prompt, e.g. office hours, viewing policy, areas you do not cover. Keep it factual.",
+   "fieldname": "extra_instructions",
+   "fieldtype": "Small Text",
+   "label": "Extra Instructions"
+  }
+ ],
+ "has_web_view": 0,
+ "index_web_pages_for_search": 0,
+ "is_submittable": 0,
+ "issingle": 1,
+ "istable": 0,
+ "links": [],
+ "modified": "2026-01-01 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "RE Portal",
+ "name": "Portal Chat Settings",
+ "naming_rule": "",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "RE Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 0
+}

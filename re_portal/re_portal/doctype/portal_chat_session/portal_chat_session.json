@@ -1,0 +1,178 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "autoname": "format:CHT-{#####}",
+ "creation": "2026-01-01 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "main_sb",
+  "session_token",
+  "lang",
+  "message_count",
+  "inquiry",
+  "cb1",
+  "last_active",
+  "client_ip",
+  "tr_sb",
+  "transcript",
+  "usage_sb",
+  "input_tokens",
+  "output_tokens",
+  "cb2",
+  "cost",
+  "messages_json"
+ ],
+ "fields": [
+  {
+   "fieldname": "main_sb",
+   "fieldtype": "Section Break",
+   "label": "Conversation"
+  },
+  {
+   "fieldname": "session_token",
+   "fieldtype": "Data",
+   "label": "Session Token",
+   "read_only": 1,
+   "hidden": 1,
+   "unique": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "lang",
+   "fieldtype": "Select",
+   "label": "Language",
+   "options": "en\nar",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "message_count",
+   "fieldtype": "Int",
+   "label": "Visitor Messages",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "inquiry",
+   "fieldtype": "Link",
+   "label": "Listing Inquiry",
+   "options": "Listing Inquiry",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "cb1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "last_active",
+   "fieldtype": "Datetime",
+   "label": "Last Active",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "client_ip",
+   "fieldtype": "Data",
+   "label": "Client IP",
+   "read_only": 1
+  },
+  {
+   "fieldname": "tr_sb",
+   "fieldtype": "Section Break",
+   "label": "Transcript"
+  },
+  {
+   "fieldname": "transcript",
+   "fieldtype": "Long Text",
+   "label": "Transcript",
+   "read_only": 1
+  },
+  {
+   "fieldname": "usage_sb",
+   "fieldtype": "Section Break",
+   "label": "Usage"
+  },
+  {
+   "fieldname": "input_tokens",
+   "fieldtype": "Int",
+   "label": "Input Tokens",
+   "read_only": 1
+  },
+  {
+   "fieldname": "output_tokens",
+   "fieldtype": "Int",
+   "label": "Output Tokens",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "cost",
+   "fieldtype": "Float",
+   "label": "Cost (USD)",
+   "precision": "6",
+   "read_only": 1
+  },
+  {
+   "fieldname": "messages_json",
+   "fieldtype": "Long Text",
+   "label": "Messages JSON",
+   "hidden": 1,
+   "read_only": 1
+  }
+ ],
+ "has_web_view": 0,
+ "index_web_pages_for_search": 0,
+ "is_submittable": 0,
+ "issingle": 0,
+ "istable": 0,
+ "links": [],
+ "modified": "2026-01-01 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "RE Portal",
+ "name": "Portal Chat Session",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "RE Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Leasing Officer",
+   "share": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 0
+}
