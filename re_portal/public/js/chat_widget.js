@@ -1,7 +1,7 @@
 (function () {
   "use strict";
   var path = location.pathname;
-  if (!(path === "/properties" || path.indexOf("/property/") === 0 || path === "/contact")) return;
+  if (!(path === "/properties" || path.indexOf("/property/") === 0 || path === "/contact" || path === "/listings")) return;
   if (window.__rpChat) return;
   window.__rpChat = true;
 
@@ -30,7 +30,41 @@
   var cfg = {}, busy = false, started = false;
   var el = {};
 
+  // Standalone pages (such as /listings) do not load the Frappe web JS, so there is
+  // no frappe.call there: use fetch, and fetch a CSRF token once for write calls.
+  var csrfToken = null;
+  function getCsrf(cb) {
+    if (csrfToken !== null) return cb(csrfToken);
+    fetch("/api/method/re_core.re_core.listing_portal_api.listing_portal.get_csrf_token", { credentials: "same-origin" })
+      .then(function (r) { return r.json(); })
+      .then(function (d) { csrfToken = d.message || ""; cb(csrfToken); })
+      .catch(function () { csrfToken = ""; cb(csrfToken); });
+  }
+  function fetchApi(method, args, ok, fail, type) {
+    var url = "/api/method/re_portal.api.chat." + method;
+    function go(token) {
+      var opts = { credentials: "same-origin", headers: {} };
+      if (type === "GET") {
+        var q = Object.keys(args || {}).filter(function (k) { return args[k] !== null && args[k] !== undefined; })
+          .map(function (k) { return encodeURIComponent(k) + "=" + encodeURIComponent(args[k]); }).join("&");
+        if (q) url += "?" + q;
+        opts.method = "GET";
+      } else {
+        opts.method = "POST";
+        opts.headers["Content-Type"] = "application/json";
+        if (token) opts.headers["X-Frappe-CSRF-Token"] = token;
+        opts.body = JSON.stringify(args || {});
+      }
+      fetch(url, opts)
+        .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+        .then(function (d) { ok(d.message || {}); })
+        .catch(function () { if (fail) fail(); });
+    }
+    if (type === "GET") go(""); else getCsrf(go);
+  }
+
   function api(method, args, ok, fail, type) {
+    if (!(window.frappe && frappe.call)) return fetchApi(method, args, ok, fail, type);
     frappe.call({
       method: "re_portal.api.chat." + method, type: type || "POST", args: args,
       callback: function (r) { ok(r.message || {}); },
